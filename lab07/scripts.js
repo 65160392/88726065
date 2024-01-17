@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const todoList = document.getElementById("todo-list");
-    const todoInput = document.getElementById("todo-input");
-    const addButton = document.getElementById("add-button");
+    const todoList = document.getElementById("todo-list");    // อ้างอิงถึง <ul> ที่มี id="todo-list"
+    const todoInput = document.getElementById("todo-input");  // อ้างอิงถึง <input> ที่มี id="todo-input"
+    const addButton = document.getElementById("add-button");  // อ้างอิงถึง <button> ที่มี id="add-button"  
     // อาร์เรย์สำหรับเก็บรายการ Todo
     let todos = [];
     // เพิ่มรายการ Todo
@@ -48,20 +48,20 @@ function renderTodoList() {
     const completeButton = document.createElement("button");
     completeButton.textContent = todoItem.completed ? "ยกเลิก" : "เสร็จ";
     completeButton.addEventListener("click", () => toggleComplete(i));
-    listItem.appendChild(completeButton);
-    listItem.appendChild(deleteButton);
-    todoList.appendChild(listItem);
+    listItem.appendChild(completeButton); // เพิ่ม completeButton เข้าไปใน listItem
+    listItem.appendChild(deleteButton);  // เพิ่ม deleteButton เข้าไปใน listItem
+    todoList.appendChild(listItem);   // เพิ่ม listItem เข้าไปใน todoList
     }
     }
     // การกดปุ่ ม "เพิ่ม"
-    addButton.addEventListener("click", addTodo);
+    addButton.addEventListener("click", addTodo); // เพิ่ม event listener สำหรับการกดปุ่ม "เพิ่ม"
     // การกด Enter ใน input
     todoInput.addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-    addTodo();
+    if (event.key === "Enter") {     // ตรวจสอบว่ากดปุ่ม Enter
+    addTodo();          // เรียกใช้ฟังก์ชัน addTodo() เมื่อกดปุ่ม Enter
     }
     });
     
     // แสดงรายการ Todo คร้ังแรก
-    renderTodoList();
+    renderTodoList(); // เรียกใช้ฟังก์ชัน renderTodoList() เพื่อแสดงรายการ Todo ครั้งแรก
     });
