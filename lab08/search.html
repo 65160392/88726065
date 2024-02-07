@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book DB - ค้นหา</title>
+</head>
+<body>
+    <h1>ค้นหาหนังสือ</h1>
+    <form action="/action_page.php">
+        <label for="search_name">ชื่อหนังสือ:</label>
+        <input type="text" id="search_name" name="search_name">
+        <label for="search_price">ราคา:</label>
+        <input type="number" id="search_price" name="search_price">
+        <label for="search_author">ผู้แต่ง:</label>
+        <input type="text" id="search_author" name="search_author">
+        <input type="submit" value="ค้นหา">
+    </form>
+    <div id="result"></div>
+    <script>
+        function searchBook() {
+            var searchName = document.getElementById("search_name").value;
+            var searchPrice = document.getElementById("search_price").value;
+            var searchAuthor = documentgetElementById("search_author").value;
+            var result = document.getElementById("result");
+            var html = "";
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/search_book.php?name=" + searchName + 
+                "&price=" + searchPrice + "&author=" + searchAuthor, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var books = JSON.parse(xhr.responseText);
+                    for (var i = 0; i < books.length; i++) {
+                        html += "<div class='book'>";
+                        html += "<h2>" + books[i].name + "</h2>";
+                        html += "<p>ราคา: " + books[i].price + " บาท</p>";
+                        html += "<p>ผู้แต่ง: " + books[i].author + "</p>";
+                        html += "</div>";
+                    }
+                    result.innerHTML = html;
+                } else {
+                    console.log("Error: " + xhr.status);
+                }
+            };
+            xhr.send();
+        }
+        searchBook();
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book DB - เพิ่ม/แก้ไข</title>
+</head>
+<body>
+    <h1>เพิ่ม/แก้ไขหนังสือ</h1>
+    <form action="/action_page.php" method="post">
+        <label for="book_id">รหัสหนังสือ:</label><br>
+        <input type="number" id="book_id" name="book_id" readonly><br>
+        <label for="book_name">ชื่อหนังสือ:</label><br>
+        <input type="text" id="book_name" name="book_name" required><br>
+        <label for="book_price">ราคา:</label><br>
+        <input type="number" id="book_price" name="book_price" required><br>
+        <label for="book_author">ผู้แต่ง (สูงสุด 3 คน):</label><br>
+        <input type="text" id="book_author1" name="book_author1">
+        <input type="text" id="book_author2" name="book_author2">
+        <input type="text" id="book_author3" name="book_author3"><br><br>
+        <input type="submit" value="บันทึก">
+        <input type="reset" value="ล้างข้อมูล">
+    </form>
+    <script>
+        function validateAuthors() {
+            var author1 = document.getElementById("book_author1").value;
+            var author2 = document.getElementById("book_author2").value;
+            var author3 = document.getElementById("book_author3").value;
+            var count = 0;
+            if (author1 != "") {
+                count++;
+            }
+            if (author2 != "") {
+                count++;
+            }
+            if (author3 != "") {
+                count++;
+            }
+            if (count > 3) {
+                alert("จำนวนผู้แต่งไม่เกิน 3 คน");
+                return false;
+            }
+            return true;
+        }
+        document.getElementById("myForm").onsubmit = validateAuthors;
+    </script>
+</body>
+</html>
