@@ -1,0 +1,21 @@
+[
+    {
+      "id": 1,
+      "name": "Java",
+      "price": 155,
+      "author": ["John", "Jame"]
+    },
+    {
+      "id": 2,
+      "name": "Python",
+      "price": 145,
+      "author": ["Max", "Harry"]
+    },
+    {
+      "id": 3,
+      "name": "Golang",
+      "price": 200,
+      "author": ["Guy", "Boss", "M"]
+    }
+  ]
+  
