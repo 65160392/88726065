@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Dog Images</title>
+</head>
+
+<body>
+  <h1>My Dog Images</h1>
+  <div id="dogImages"></div>
+  <p id="noImagesMessage">ไม่พบรูปของคุณ</p>
+  <a href="uploaddog.html">อัพโหลดรูปสุนัข</a>
+
+  <script>
+    const API_URL = 'https://api.thedogapi.com/v1/';
+    const API_KEY = 'live_5m8OFisGTZ1B6XuQpRVTuZ0LPbNcCknBrNvsN8FVcAyz0XzFG2Tyoe0d6KsNhDDH';
+
+    fetch(`${API_URL}images/search`, {
+      headers: {
+        'x-api-key': API_KEY
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const dogImages = document.getElementById('dogImages');
+        const noImagesMessage = document.getElementById('noImagesMessage');
+
+        if (data.length === 0) {
+          noImagesMessage.style.display = 'block';
+        } else {
+          noImagesMessage.style.display = 'none';
+          data.forEach(image => {
+            dogImages.innerHTML += `<img src="${image.url}" alt="Dog Image">`;
+            dogImages.innerHTML += `<button onclick="deleteImage('${image.id}')">Delete</button>`;
+          });
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching dog images:', error);
+      });
+
+    function deleteImage(imageId) {
+      if (confirm('Are you sure you want to delete this image?')) {
+        fetch(`${API_URL}images/${imageId}`, {
+          method: 'DELETE',
+          headers: {
+            'x-api-key': API_KEY
+          }
+        })
+          .then(response => {
+            if (response.ok) {
+              location.reload();
+            } else {
+              throw new Error('Failed to delete image');
+            }
+          })
+          .catch(error => {
+            console.error('Error deleting image:', error);
+          });
+      }
+    }
+  </script>
+</body>
+
+</html>

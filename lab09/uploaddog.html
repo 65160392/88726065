@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Dog Image</title>
+</head>
+
+<body>
+  <h1>Upload Dog Image</h1>
+  <input type="file" id="fileInput" />
+  <button onclick="uploadImage()">Upload</button>
+  <div id="uploadResults"></div>
+  <script>
+    const API_URL = "https://api.thedogapi.com/v1/";
+    const API_KEY = "live_5m8OFisGTZ1B6XuQpRVTuZ0LPbNcCknBrNvsN8FVcAyz0XzFG2Tyoe0d6KsNhDDH";
+
+    function uploadImage() {
+      const fileInput = document.getElementById("fileInput");
+      const file = fileInput.files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+
+      fetch(`${API_URL}images/upload`, {
+        method: "POST",
+        headers: {
+          "x-api-key": API_KEY,
+        },
+        body: formData,
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Failed to upload image");
+          }
+        })
+        .then((data) => {
+          console.log(data);
+          document.getElementById(
+            "uploadResults"
+          ).innerHTML = `<img src="${data.url}" width="50%" />`;
+        })
+        .catch((error) => {
+          console.error(error);
+          document.getElementById("uploadResults").innerText = "Failed to upload image.";
+        });
+    }
+  </script>
+</body>
+
+</html>
